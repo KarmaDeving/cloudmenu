@@ -1,0 +1,153 @@
+1.58 Steam
+
+uint64_t world = 0x0256A878;
+uint64_t waypoint = 0x1FFBC20;
+uint64_t triggerbot = 0x1FE9560;
+uint64_t camera_pos = 0x1DA5FA0;
+uint64_t function_xyz = 0x14842BB;
+uint64_t function_speed_z = 0x781096;
+uint64_t kmh = 0x2621FD0;
+
+
+------------------------SMOOTH FLY--------------------------------------------------------------------------
+Update Entity Position(GTA5.exe + 145648F): // This function is used by all nearby entities, so we have to check when it is our players turn
+1. push rbx
+2. sub rsp,60
+3. lea rdx,[rsp+20]
+4. mov rbx,rcx
+5. call GTA5.exe+1443518
+6. mov rax,[rbx+10]
+7. movaps xmm0,[rsp+20]
+8. movaps xmm2,[rsp+40]
+9. movaps xmm1,[rsp+30]
+10. movaps [rax+20],xmm0
+11. movaps xmm0,xmm2
+12. movaps [rax+30],xmm1
+13. shufps xmm0,[rax+40],-02
+14. shufps xmm2,xmm0,-7C
+15. movaps xmm1,[rsp+50]
+16. movaps xmm0,xmm1
+17. movaps [rax+40],xmm2
+18. shufps xmm0,[rax+50],-02
+19. shufps xmm1,xmm0,-7C
+20. movaps [rax+50],xmm1     |    jmp GTA5.exe + 0x1A // We jump to "GTA5.exe + 0x1A" because overwriting the code here would damage important code.
+21. add rsp, 60              |    ret                 // At "GTA5.exe + 0x1A" there is already executed code which the game doesn't need anymore
+22. pop rbx
+23. ret 
+
+Code(GTA5.exe + 0x1A):
+30. mov rcx, &localplayer_position_class              // first we move the local player position base to rcx
+31. cmp rcx, rax                                      // then we compare wether rcx and rax are the same
+32. je GTA5.exe + 13.                                 // if yes, we skip the next line
+33. movaps [rax+50],xmm1                              // which updates the position of the current entity(rax)
+34. add rsp, 60                                       // vanilla code
+35. pop rbx                                           // vanilla code
+36. ret                                               // vanilla code
+
+----------------------------CLASSES---------------------------------------------------------------------------
+
+class CPed // World + 0x8
+{
+public:
+    char pad_0000[32]; //0x0000
+    CPedModelInfo* m_PedModelInfo; //0x0020
+    char pad_0028[8]; //0x0028
+    CNavigation* m_Navigation; //0x0030
+    char pad_0038[88]; //0x0038
+    Vector3 m_VisualPos; //0x0090
+    char pad_009C[52]; //0x009C
+    rage::netObject* m_NetObject; //0x00D0
+    char pad_00D8[176]; //0x00D8
+    uint32_t m_DamageBits; //0x0188
+    char pad_018C[244]; //0x018C
+    float m_Health; //0x0280
+    char pad_0284[2724]; //0x0284
+    CVehicle* m_LastVehicle1; //0x0D30
+    CPlayerInfo* m_PlayerInfo; //0x10C8
+    CPedInventory* m_PedInventory; //0x10D0
+    CPedWeaponManager* m_WeaponManager; //0x10D8
+    char pad_10E0[1024]; //0x10E0
+    float m_Armor; //0x14E0
+    char pad_14E4[60]; //0x14E4
+    CVehicle* m_LastVehicle2; //0x1520
+}; //Size: 0x1528
+
+PlayerPos = Player + 0x30
+	float    x = 0x50;
+	float    y = 0x54;
+	float    z = 0x58;
+
+
+class CPlayerInfo // Player + 0x10C8
+{
+public:
+    char pad_0000[52]; //0x0000
+    uint32_t m_LanIP; //0x0034
+    char pad_0038[4]; //0x0038
+    uint32_t m_RelayIP; //0x003C
+    char pad_0040[4]; //0x0040
+    uint32_t m_OnlineIP; //0x0044
+    char pad_0048[24]; //0x0048
+    uint64_t m_HostKey; //0x0060
+    char pad_0068[8]; //0x0068
+    uint64_t m_RockstarID; //0x0070
+    char pad_0078[12]; //0x0078
+    char m_Name[20]; //0x0084
+    char pad_0098[184]; //0x0098
+    float m_SwimSpeed; //0x0170
+    char pad_0154[24]; //0x0154
+    float m_StealthWalkSpeed; //0x016C
+    char pad_0170[88]; //0x0170
+    class CPed* m_Entity; //0x01C8
+    char pad_01D0[40]; //0x01D0
+    uint32_t m_FrameFlags; //0x01F8
+    char pad_01FC[1640]; //0x01FC
+    uint32_t m_WantedLevelDisplay; //0x0864
+    uint32_t m_WantedLevel; //0x0888
+    char pad_086C[1124]; //0x086C
+    float m_RunSpeed; //0x0CF0
+    float m_Stamina; //0x0CF4
+    float m_MaxStaminaRegeneration; //0x0CD8
+}; //Size: 0x0CDC
+
+PlayerVehicle = Player + 0xD28
+	uint64_t position = 0x30;
+	uint8_t  godmode = 0x189;
+	float    engineHealth1 = 0x280;
+	float    engineHealth2 = 0x908;
+	uint64_t handling = 0x938;
+	uint8_t  invisibility = 0x2C;
+	float	 gravity = 0xC5C;
+
+PlayerVehiclePos = PlayerVehicle + 0x30
+	float    x = 0x50;
+	float    y = 0x54;
+	float    z = 0x58;
+
+PlayerVehicleHandling = PlayerVehicle + 0x938
+	float    gravity = 0xC;
+	float    suspensionHeight = 0xD0;
+	float    suspensionForce = 0xBC;
+	float    tractionMin = 0x88;
+	float    tractionMax = 0x90;
+	float    acceleration = 0x4C;
+	float    collisionDamage = 0xF0;
+	float    handbrakeForce = 0x7C;
+	float    thrust = 0x338;
+
+PlayerWeaponinfo = Player + [0x10D8, 0x20]
+	float    recoil = 0x2F4;
+	float	 range = 0x28C;
+	float    bulletMass = 0xE0;
+	float	 bulletDamage = 0xB0;
+	uint32_t bulletInBatch = 0x120;
+	float	 muzzleVelocity = 0x11C;
+	float    reloadMultiplier = 0x134;
+	float    batchSpread = 0x74;
+	float    penetration = 0x110;
+	float    forceOnPed = 0xD4;
+	float    forceOnVehicle = 0xD8;
+	float    forceOnHeli = 0xDC;
+
+PlayerWeaponinfoAmmoinfo = PlayerWeaponinfo + [0x60, 0x8, 0x0]
+	uint32_t ammo = 0x18
