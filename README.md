@@ -8,7 +8,7 @@
 # Controls
 **・F11** Activate
 
-**・F12** Toggle trainer HUD
+**・F12** Toggle Mod Menu
 
 **・NUM2/8/4/6** Navigate
 
@@ -26,28 +26,13 @@
 
 **・BACKSPACE** Turns vehicle 180º
 
-## AirBreak Controls:
-
-**・RSHIFT** Toggle AirBrk
-
-**・W Move** forward
-
-**・A Move** left
-
-**・S Move** backward
-
-**・D Move** right
-
-**・ARROW UP** Move up
-
-**・ARROW DOWN** Move down
 
 # ⚙️・How to Report a Bug
 Where do I report any bugs or problems i have with the mod?
 
 You can add KarmaDeving#0685 on Discord for any issues or bugs with the mod.
 
-# ChangeLOG FX Trainer
+# ChangeLOG 
 
 **0.1**
 First Release.
