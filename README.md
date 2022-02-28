@@ -5,12 +5,42 @@
 
 ![image](https://i.imgur.com/9OxrK0I.jpg)
 
+# Controls
+**・F11** Activate
 
-# 💾・ How to Open the Menu
-By default it is F4 (you may change the hotkey in the settings)
+**・F12** Toggle trainer HUD
 
+**・NUM2/8/4/6** Navigate
 
+**・NUM0/F4** Back
 
+**・NUM5** Select
+
+**・NUM9/3** Vehicle Boost (when activated)
+
+**・NUM+** Vehicle Rocket(when activated)
+
+**・INSERT** Toggle godmode
+
+**・DELETE** Flip vehicle
+
+**・BACKSPACE** Turns vehicle 180º
+
+## AirBreak Controls:
+
+**・RSHIFT** Toggle AirBrk
+
+**・W Move** forward
+
+**・A Move** left
+
+**・S Move** backward
+
+**・D Move** right
+
+**・ARROW UP** Move up
+
+**・ARROW DOWN** Move down
 
 # ⚙️・How to Report a Bug
 Where do I report any bugs or problems i have with the mod?
@@ -26,5 +56,3 @@ You can add KarmaDeving#0685 on Discord for any issues or bugs with the mod.
 2. Run the file and let the executable inject the visuals into your FiveM game files
 
 
-
-RECOMMENDED INGAME SETTINGS (Comming Soon!)
