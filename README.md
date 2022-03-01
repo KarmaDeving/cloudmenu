@@ -68,7 +68,7 @@ Boost now works on fiveM
 
 # 📁・Setting up Cloud Menu
 
-1. Drag & Drop the exe file and the FX files to a folder on your desktop or anywhere else you prefer
-2. Run the file and let the executable inject the visuals into your FiveM game files
+1. Drag & Drop all the files to a folder on your desktop or anywhere else you prefer
+2. Run the EXE file and let the executable inject the visuals into your FiveM game files
 (Excecutable will sort the files where they need to be)
 
